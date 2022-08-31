@@ -72,9 +72,9 @@ def get_weather(region):
     # 风力等级
     windScale = response["now"]["windScale"]
     # 日出时间
-    sunrise = response2["sunrise"]
+    sunrise = response3["daily"][0]["sunrise"]
     # 日落时间
-    sunset = response2["sunset"]  
+    sunset = response3["daily"][0]["sunset"]  
     
     return weather, tempMin, tempMax, temp, wind_dir, windScale, sunrise, sunset
  
