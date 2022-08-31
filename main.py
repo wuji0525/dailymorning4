@@ -52,12 +52,19 @@ def get_weather(region):
         location_id = response["location"][0]["id"]
     weather_url = "https://devapi.qweather.com/v7/weather/now?location={}&key={}".format(location_id, key)
     response = get(weather_url, headers=headers).json()
+    # 日出日落
+    weather_url2 = "https://devapi.qweather.com/v7/astronomy/sun?location={}&key={}".format(location_id, key)
+    response2 = get(weather_url2, headers=headers).json()
+    
+    weather_url3 = "https://devapi.qweather.com/v7/weather/3d?location={}&key={}".format(location_id, key)
+    response3 = get(weather_url3, headers=headers).json()
+    
     # 天气
     weather = response["now"]["text"]  
     # 最低气温
-    tempMin = response["daily"]["tempMin"] + u"\N{DEGREE SIGN}" + "C"
+    tempMin = response["daily"][0]["tempMin"] + u"\N{DEGREE SIGN}" + "C"
     # 最高气温
-    tempMax = response["daily"]["tempMax"] + u"\N{DEGREE SIGN}" + "C"
+    tempMax = response["daily"][0]["tempMax"] + u"\N{DEGREE SIGN}" + "C"
     # 当前温度
     temp = response["now"]["temp"] + u"\N{DEGREE SIGN}" + "C"
     # 风向
@@ -65,9 +72,9 @@ def get_weather(region):
     # 风力等级
     windScale = response["now"]["windScale"]
     # 日出时间
-    sunrise = response["daily"]["sunrise"]
+    sunrise = response2["sunrise"]
     # 日落时间
-    sunset = response["daily"]["sunset"]  
+    sunset = response2["sunset"]  
     
     return weather, tempMin, tempMax, temp, wind_dir, windScale, sunrise, sunset
  
